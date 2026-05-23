@@ -229,6 +229,12 @@
             gap: 0.3rem;
         }
 
+        .project-stats i {
+            display: inline-flex;
+            width: 1.1rem;
+            justify-content: center;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -325,6 +331,37 @@
             themeIcon.classList.toggle('fa-sun', theme !== 'dark');
         }
 
+        function getLanguageIconClass(language) {
+            const normalized = language.toLowerCase();
+            const map = {
+                javascript: 'fab fa-js',
+                typescript: 'fab fa-js',
+                python: 'fab fa-python',
+                html: 'fab fa-html5',
+                css: 'fab fa-css3-alt',
+                java: 'fab fa-java',
+                php: 'fab fa-php',
+                ruby: 'fab fa-ruby',
+                rust: 'fab fa-rust',
+                swift: 'fab fa-swift',
+                go: 'fab fa-go',
+                markdown: 'fab fa-markdown',
+                dockerfile: 'fab fa-docker',
+                shell: 'fa-solid fa-terminal',
+                bash: 'fa-solid fa-terminal',
+                sql: 'fa-solid fa-database',
+                kotlin: 'fa-solid fa-code',
+                c: 'fa-solid fa-code',
+                'c++': 'fa-solid fa-code',
+                'c#': 'fa-solid fa-code',
+                dart: 'fa-solid fa-code',
+                dartlang: 'fa-solid fa-code',
+                perl: 'fa-solid fa-code',
+                scala: 'fa-solid fa-code'
+            };
+            return map[normalized] || 'fa-solid fa-code';
+        }
+
         function toggleTheme() {
             const currentTheme = root.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -387,7 +424,12 @@
 
                     if (item.language) {
                         const language = document.createElement('span');
-                        language.textContent = `💻 ${item.language}`;
+                        const iconClass = getLanguageIconClass(item.language);
+                        const icon = document.createElement('i');
+                        icon.className = iconClass;
+                        icon.setAttribute('aria-hidden', 'true');
+                        language.appendChild(icon);
+                        language.appendChild(document.createTextNode(item.language));
                         stats.appendChild(language);
                     }
 

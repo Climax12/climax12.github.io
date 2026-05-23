@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Climax12 - Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -168,11 +167,13 @@
             animation: cardEntrance 0.5s ease forwards;
         }
 
-        .project-card-skeleton {
-            background-color: var(--card-bg);
+        .loading-text {
+            margin: 1rem 0;
             padding: 1.5rem;
             border-radius: 8px;
-            animation: pulse 1.5s infinite;
+            background-color: rgba(255, 255, 255, 0.06);
+            text-align: center;
+            color: var(--text-color);
         }
 
         @keyframes pulse {
@@ -188,19 +189,16 @@
             }
         }
 
-        .skeleton-text {
-            height: 1rem;
-            background: var(--bg-color);
-            border-radius: 4px;
-            margin-bottom: 0.8rem;
-        }
-
-        .skeleton-text.short {
-            width: 60%;
-        }
-
-        .skeleton-text.medium {
-            width: 80%;
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .project-card h3 {
@@ -274,18 +272,20 @@
                 <h1>Climax12</h1>
             </div>
         </a>
-        <button class="theme-toggle" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
+        <button type="button" class="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon" aria-hidden="true">☾</span>
         </button>
     </header>
 
     <footer>
         <div class="social-links">
             <a href="https://x.com/1Climax1" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-twitter"></i>
+                <span aria-hidden="true">🐦</span>
+                <span class="sr-only">X</span>
             </a>
             <a href="https://github.com/Climax12" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-github"></i>
+                <span aria-hidden="true">🐙</span>
+                <span class="sr-only">GitHub</span>
             </a>
             <!-- <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-youtube"></i>
@@ -300,16 +300,7 @@
         <section class="projects">
             <h2>My Projects</h2>
             <div class="projects-grid" id="projects-container">
-                <div class="project-card-skeleton">
-                    <div class="skeleton-text short"></div>
-                    <div class="skeleton-text medium"></div>
-                    <div class="skeleton-text" style="width: 40%"></div>
-                </div>
-                <div class="project-card-skeleton">
-                    <div class="skeleton-text short"></div>
-                    <div class="skeleton-text medium"></div>
-                    <div class="skeleton-text" style="width: 40%"></div>
-                </div>
+                <p class="loading-text">Loading projects…</p>
             </div>
         </section>
     </div>
@@ -317,7 +308,7 @@
     <script>
         // Theme Toggle
         const themeToggle = document.querySelector('.theme-toggle');
-        const themeIcon = themeToggle.querySelector('i');
+        const themeIcon = document.querySelector('.theme-icon');
         const root = document.documentElement;
 
         function toggleTheme() {
@@ -325,62 +316,91 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             root.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            themeIcon.textContent = newTheme === 'dark' ? '☾' : '☀';
         }
 
-        // Load saved theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             root.setAttribute('data-theme', savedTheme);
-            themeIcon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            themeIcon.textContent = savedTheme === 'dark' ? '☾' : '☀';
         }
 
         themeToggle.addEventListener('click', toggleTheme);
 
-        // Profile image loader
         const profileImg = document.querySelector('.profile-img');
-        profileImg.onload = () => {
-            profileImg.classList.add('loaded');
-            document.querySelector('.profile-img-skeleton').remove();
-        };
+        if (profileImg) {
+            profileImg.onload = () => {
+                profileImg.classList.add('loaded');
+                const skeleton = document.querySelector('.profile-img-skeleton');
+                if (skeleton) {
+                    skeleton.remove();
+                }
+            };
+        }
 
-        // GitHub API function
         async function fetchProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '<p class="loading-text">Loading projects…</p>';
+
             try {
-                const container = document.getElementById('projects-container');
-                container.innerHTML = '';
-
                 const response = await fetch('https://api.github.com/users/Climax12/repos');
-                const projects = await response.json();
+                if (!response.ok) {
+                    throw new Error(`GitHub API returned ${response.status}`);
+                }
 
+                const projects = await response.json();
                 projects.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                container.innerHTML = '';
+                let visibleCount = 0;
 
                 projects.forEach((item, index) => {
                     if (item.fork) return;
+                    visibleCount += 1;
 
                     const card = document.createElement('div');
                     card.className = 'project-card';
-                    card.innerHTML = `
-                        <h3>${item.name}</h3>
-                        <p>${item.description || 'No description available'}</p>
-                        <div class="project-stats">
-                            ${item.language ? `<span><i class="fas fa-code"></i> ${item.language}</span>` : ''}
-                            <span><i class="fas fa-star"></i> ${item.stargazers_count}</span>
-                            <span><i class="fas fa-code-branch"></i> ${item.forks_count}</span>
-                        </div>
-                        <a href="${item.html_url}" target="_blank" rel="noopener noreferrer">
-                            View Project →
-                        </a>
-                    `;
+                    card.style.animationDelay = `${index * 0.1}s`;
+
+                    const title = document.createElement('h3');
+                    title.textContent = item.name;
+
+                    const description = document.createElement('p');
+                    description.textContent = item.description || 'No description available';
+
+                    const stats = document.createElement('div');
+                    stats.className = 'project-stats';
+
+                    if (item.language) {
+                        const language = document.createElement('span');
+                        language.textContent = `💻 ${item.language}`;
+                        stats.appendChild(language);
+                    }
+
+                    const stars = document.createElement('span');
+                    stars.textContent = `★ ${item.stargazers_count}`;
+                    stats.appendChild(stars);
+
+                    const forks = document.createElement('span');
+                    forks.textContent = `⎇ ${item.forks_count}`;
+                    stats.appendChild(forks);
+
+                    const link = document.createElement('a');
+                    link.href = item.html_url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.textContent = 'View Project →';
+
+                    card.append(title, description, stats, link);
                     container.appendChild(card);
-                    
-                    setTimeout(() => {
-                        card.style.animationDelay = `${index * 0.1}s`;
-                    }, 0);
                 });
+
+                if (visibleCount === 0) {
+                    container.innerHTML = '<p class="loading-text">No public repositories found.</p>';
+                }
             } catch (error) {
                 console.error('Error fetching projects:', error);
-                container.innerHTML = '<p>Failed to load projects. Please try again later.</p>';
+                container.innerHTML = '<p class="loading-text">Failed to load projects. Please try again later.</p>';
             }
         }
 

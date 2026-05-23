@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Climax12 - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -273,19 +274,27 @@
             </div>
         </a>
         <button type="button" class="theme-toggle" aria-label="Toggle theme">
-            <span class="theme-icon" aria-hidden="true">☾</span>
+            <i class="theme-icon fa-solid fa-moon" aria-hidden="true"></i>
         </button>
     </header>
 
     <footer>
         <div class="social-links">
             <a href="https://x.com/1Climax1" target="_blank" rel="noopener noreferrer">
-                <span aria-hidden="true">🐦</span>
+                <i class="fab fa-twitter" aria-hidden="true"></i>
                 <span class="sr-only">X</span>
             </a>
             <a href="https://github.com/Climax12" target="_blank" rel="noopener noreferrer">
-                <span aria-hidden="true">🐙</span>
+                <i class="fab fa-github" aria-hidden="true"></i>
                 <span class="sr-only">GitHub</span>
+            </a>
+            <a href="https://www.reddit.com/user/Delicious_Will1301/" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-reddit-alien" aria-hidden="true"></i>
+                <span class="sr-only">Reddit</span>
+            </a>
+            <a href="https://keybase.io/climax12" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-keybase" aria-hidden="true"></i>
+                <span class="sr-only">Keybase</span>
             </a>
             <!-- <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-youtube"></i>
@@ -311,18 +320,23 @@
         const themeIcon = document.querySelector('.theme-icon');
         const root = document.documentElement;
 
+        function updateThemeIcon(theme) {
+            themeIcon.classList.toggle('fa-moon', theme === 'dark');
+            themeIcon.classList.toggle('fa-sun', theme !== 'dark');
+        }
+
         function toggleTheme() {
             const currentTheme = root.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             root.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            themeIcon.textContent = newTheme === 'dark' ? '☾' : '☀';
+            updateThemeIcon(newTheme);
         }
 
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             root.setAttribute('data-theme', savedTheme);
-            themeIcon.textContent = savedTheme === 'dark' ? '☾' : '☀';
+            updateThemeIcon(savedTheme);
         }
 
         themeToggle.addEventListener('click', toggleTheme);

@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/climax12
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://climax12.github.io
+  * I am climax12 (https://keybase.io/climax12) on keybase.
+  * I have a public key ASAy9badDsMScdbxLEWcvMhVQFQVEELHE61JciJkh8CLgwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101cd9ae0046964afc5ffc2712a07b55f34bc2971a41311b272523685dcdf8493a80a",
+      "host": "keybase.io",
+      "kid": "012032f5b69d0ec31271d6f12c459cbcc8554054151042c713ad4972226487c08b830a",
+      "uid": "fe5ec5881730b751b7b518e59b494419",
+      "username": "climax12"
+    },
+    "merkle_root": {
+      "ctime": 1779546608,
+      "hash": "90cbcc09deec552e5bf343965cef8624a28934430781f020599f9c658b24ab65d7716040efe670c28968b52305c2d5afd617af261e00dc85f7316760c32aef08",
+      "hash_meta": "f6e75b36d7fbea87a76b89c300dafcc6cd077200882410304eb0b710b81d184e",
+      "seqno": 27594967
+    },
+    "service": {
+      "entropy": "RsDt0avdPz0g0Gb7n3L2/lOS",
+      "hostname": "climax12.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.6.2"
+  },
+  "ctime": 1779546813,
+  "expire_in": 504576000,
+  "prev": "d65c944977ce06a57c0b8e569e15098f9472559fb4d25fdb6ba850b1eb2b2ae2",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgMvW2nQ7DEnHW8SxFnLzIVUBUFRBCxxOtSXIiZIfAi4MKp3BheWxvYWTESpcCDMQg1lyUSXfOBqV8C45WnhUJj5RyVZ+00l/ba6hQsesrKuLEIJs4vhhVM8NB0s9UOhBjyhU91Luzdq+IeEjrAmfVL1CxAgHCo3NpZ8RAkQm6L3XWzS2HADZcyD5puWGTFNxuzrvQO35X1KLuBSMhx6y659sHKi5o4zsz4hZZLFRlHcKeGhEe2HymVzCRAahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIAAnKIvSIqsl+iNxyMiBvWiS6gaNYphPUwMXupxiiFUOo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/climax12
+
+==================================================================

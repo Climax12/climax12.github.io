@@ -235,6 +235,37 @@
             justify-content: center;
         }
 
+        .now-playing {
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .now-playing-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .now-playing-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .now-playing-note {
+            margin-top: 0.8rem;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .now-playing h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -299,19 +330,23 @@
                 <span class="sr-only">Reddit</span>
             </a>
             <a href="https://keybase.io/climax12" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-keybase" aria-hidden="true"></i>
+                <i class="fa-solid fa-key" aria-hidden="true"></i>
                 <span class="sr-only">Keybase</span>
             </a>
-            <!-- <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-instagram"></i>
-            </a> -->
         </div>
     </footer>
 
     <div class="container">
+        <section class="now-playing">
+            <h2>Now Playing</h2>
+            <div class="now-playing-card">
+                <a href="https://www.last.fm/user/Climax12" target="_blank" rel="noopener noreferrer">
+                    <img src="https://lastfm-recently-played.vercel.app/api?user=Climax12&show_user=header&loved=true&bg_color=15181D&loved_style=2&footer_style=compact_stats&count=2" alt="Last.fm recently played" loading="lazy">
+                </a>
+                <p class="now-playing-note">Live Last.fm listening history, styled to match the site. Click to open the Last.fm profile.</p>
+            </div>
+        </section>
+
         <section class="projects">
             <h2>My Projects</h2>
             <div class="projects-grid" id="projects-container">
@@ -331,35 +366,34 @@
             themeIcon.classList.toggle('fa-sun', theme !== 'dark');
         }
 
+        const languageIconMap = {
+            javascript: 'fab fa-js',
+            typescript: 'fab fa-js',
+            python: 'fab fa-python',
+            html: 'fab fa-html5',
+            css: 'fab fa-css3-alt',
+            java: 'fab fa-java',
+            php: 'fab fa-php',
+            ruby: 'fab fa-ruby',
+            rust: 'fab fa-rust',
+            swift: 'fab fa-swift',
+            go: 'fab fa-go',
+            markdown: 'fab fa-markdown',
+            dockerfile: 'fab fa-docker',
+            shell: 'fa-solid fa-terminal',
+            bash: 'fa-solid fa-terminal',
+            sql: 'fa-solid fa-database',
+            kotlin: 'fa-solid fa-code',
+            c: 'fa-solid fa-code',
+            'c++': 'fa-solid fa-code',
+            'c#': 'fa-solid fa-code',
+            dart: 'fa-solid fa-code',
+            perl: 'fa-solid fa-code',
+            scala: 'fa-solid fa-code'
+        };
+
         function getLanguageIconClass(language) {
-            const normalized = language.toLowerCase();
-            const map = {
-                javascript: 'fab fa-js',
-                typescript: 'fab fa-js',
-                python: 'fab fa-python',
-                html: 'fab fa-html5',
-                css: 'fab fa-css3-alt',
-                java: 'fab fa-java',
-                php: 'fab fa-php',
-                ruby: 'fab fa-ruby',
-                rust: 'fab fa-rust',
-                swift: 'fab fa-swift',
-                go: 'fab fa-go',
-                markdown: 'fab fa-markdown',
-                dockerfile: 'fab fa-docker',
-                shell: 'fa-solid fa-terminal',
-                bash: 'fa-solid fa-terminal',
-                sql: 'fa-solid fa-database',
-                kotlin: 'fa-solid fa-code',
-                c: 'fa-solid fa-code',
-                'c++': 'fa-solid fa-code',
-                'c#': 'fa-solid fa-code',
-                dart: 'fa-solid fa-code',
-                dartlang: 'fa-solid fa-code',
-                perl: 'fa-solid fa-code',
-                scala: 'fa-solid fa-code'
-            };
-            return map[normalized] || 'fa-solid fa-code';
+            return languageIconMap[language.toLowerCase()] || 'fa-solid fa-code';
         }
 
         function toggleTheme() {
